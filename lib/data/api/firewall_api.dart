@@ -47,7 +47,7 @@ class FirewallApi {
     String strategy = '',
   }) async {
     final resp = await _client.post<Map<String, dynamic>>(
-      '/api/v2/hosts/firewall/search',
+      '/api/v2/hosts/firewall/rules/search',
       data: {
         'type': type,
         'page': page,
