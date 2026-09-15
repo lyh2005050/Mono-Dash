@@ -119,7 +119,9 @@ class FirewallPortRulesController extends _$FirewallPortRulesController {
     required Map<String, dynamic> newRule,
   }) async {
     final repo = await ref.read(firewallRepositoryProvider.future);
-    await repo.updatePortRule({'oldRule': oldRule, 'newRule': newRule});
+    // 1Panel V2 没有 update 接口，改为先删后加
+    await repo.operatePortRule(oldRule);
+    await repo.operatePortRule(newRule);
     await refresh(
       silent: true,
       orderAliases: {_bodyPortOrderKey(newRule): _bodyPortOrderKey(oldRule)},
@@ -355,7 +357,9 @@ class FirewallIpRulesController extends _$FirewallIpRulesController {
     required Map<String, dynamic> newRule,
   }) async {
     final repo = await ref.read(firewallRepositoryProvider.future);
-    await repo.updateAddrRule({'oldRule': oldRule, 'newRule': newRule});
+    // 1Panel V2 没有 update 接口，改为先删后加
+    await repo.operateIpRule(oldRule);
+    await repo.operateIpRule(newRule);
     await refresh(
       silent: true,
       orderAliases: {_bodyIpOrderKey(newRule): _bodyIpOrderKey(oldRule)},
