@@ -23,16 +23,18 @@ jobs:
           channel: 'stable'
       
       - name: Generate keystore
+        working-directory: android
         run: |
           keytool -genkeypair -v             -keystore upload-keystore.jks             -keyalg RSA -keysize 2048 -validity 10000             -alias upload             -storepass 1panel2026             -keypass 1panel2026             -dname "CN=1Panel, OU=Dev, O=Dev, L=City, ST=State, C=CN"
       
       - name: Set signing config
+        working-directory: android
         run: |
-          cat > android/key.properties << 'EOF'
+          cat > key.properties << 'EOF'
           storePassword=1panel2026
           keyPassword=1panel2026
           keyAlias=upload
-          storeFile=../upload-keystore.jks
+          storeFile=upload-keystore.jks
           EOF
       
       - name: Install dependencies
