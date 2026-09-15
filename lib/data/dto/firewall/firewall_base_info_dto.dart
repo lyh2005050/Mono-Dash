@@ -14,7 +14,7 @@ class FirewallBaseInfoDto {
       name: json['name'] as String? ?? '',
       isExist: json['isExist'] as bool? ?? false,
       isActive: json['isActive'] as bool? ?? false,
-      isInit: json['isInit'] as bool? ?? true,
+      isInit: true, // 强制已初始化，兼容 1Panel V2.3.0 API
       isBind: json['isBind'] as bool? ?? false,
       version: json['version'] as String? ?? '',
       pingStatus: json['pingStatus'] as String? ?? 'Disable',
