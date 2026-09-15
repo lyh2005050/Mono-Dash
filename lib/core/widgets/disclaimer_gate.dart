@@ -22,7 +22,7 @@ class _DisclaimerGateState extends ConsumerState<DisclaimerGate> {
 
   Future<void> _checkAgreement() async {
     final storage = ref.read(storageServiceProvider);
-    final agreed = await storage.getBool(_agreedKey) ?? false;
+    final agreed = await storage.getSecureString(_agreedKey) == 'true';
     if (!agreed && mounted) {
       setState(() => _showDialog = true);
     }
@@ -30,7 +30,7 @@ class _DisclaimerGateState extends ConsumerState<DisclaimerGate> {
 
   Future<void> _agree() async {
     final storage = ref.read(storageServiceProvider);
-    await storage.setBool(_agreedKey, true);
+    await storage.setSecureString(_agreedKey, 'true');
     if (mounted) setState(() => _showDialog = false);
   }
 
