@@ -46,14 +46,20 @@ class FirewallApi {
     String info = '',
     String strategy = '',
   }) async {
+    // 1Panel V2 的 rules/search API 需要 scope 结构体
+    // 正确格式：{"page":1,"pageSize":15,"scope":{"provider":"ufw","family":"ipv4","direction":"input"}}
     final resp = await _client.post<Map<String, dynamic>>(
       '/api/v2/hosts/firewall/rules/search',
       data: {
-        'type': type,
         'page': page,
         'pageSize': pageSize,
         'info': info,
         'strategy': strategy,
+        'scope': {
+          'provider': 'ufw',
+          'family': 'ipv4',
+          'direction': 'input',
+        },
       },
     );
     return PageResult<RuleInfoDto>.fromJson(
