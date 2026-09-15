@@ -24,7 +24,7 @@ class RevenueCatConfig {
   static const entitlementId = 'Mono Dash Unlimited';
   static const offeringId = 'default';
   static const freeServerLimit = 1;
-  static const bypassServerLimitCheck = false;
+  static const bypassServerLimitCheck = true;
   static const testFlightApiBaseUrl = 'https://testflight.dhcp.services';
 
   static String? get apiKey {
@@ -159,7 +159,7 @@ class PurchaseController extends AsyncNotifier<PurchaseState> {
     final lastVerifiedAt = await _readLastVerifiedAt(storage);
     return PurchaseState(
       isConfigured: _configured,
-      isUnlocked: localUnlocked,
+      isUnlocked: true, // 破解：永久解锁
       freeServerLimit: RevenueCatConfig.freeServerLimit,
       entitlementId: RevenueCatConfig.entitlementId,
       verificationStatus: localUnlocked
