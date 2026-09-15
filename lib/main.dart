@@ -14,6 +14,7 @@ import 'core/router/app_router.dart';
 import 'core/storage/storage_service.dart';
 import 'core/theme/app_theme.dart';
 import 'core/widgets/ios_server_widget_bridge.dart';
+import 'core/widgets/disclaimer_gate.dart';
 import 'presentation/features/purchases/providers/purchase_provider.dart';
 import 'presentation/features/settings/providers/app_settings_provider.dart';
 import 'presentation/features/settings/widgets/app_lock_gate.dart';
@@ -31,7 +32,7 @@ void main() async {
     LiquidGlassWidgets.wrap(
       child: ProviderScope(
         overrides: [storageServiceProvider.overrideWithValue(storageService)],
-        child: const ToastificationWrapper(child: MyApp()),
+        child: const ToastificationWrapper(child: DisclaimerGate(child: MyApp())),
       ),
     ),
   );
