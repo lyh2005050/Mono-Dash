@@ -51,6 +51,7 @@ jobs:
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
+        continue-on-error: true
         with:
           tag_name: v2.1.4
           name: v2.1.4 - 修复防火墙删除规则404
