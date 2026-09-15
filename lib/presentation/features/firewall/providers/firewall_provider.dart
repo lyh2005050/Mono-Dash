@@ -107,7 +107,10 @@ class FirewallPortRulesController extends _$FirewallPortRulesController {
   Future<void> removeRules(List<Map<String, dynamic>> rules) async {
     if (rules.isEmpty) return;
     final repo = await ref.read(firewallRepositoryProvider.future);
-    await repo.batchOperate({'type': 'port', 'rules': rules});
+    // 1Panel V2 的 batch 接口已变更，改为逐条调用 port 接口删除
+    for (final rule in rules) {
+      await repo.operatePortRule(rule);
+    }
     await refresh(silent: true);
   }
 
@@ -342,10 +345,8 @@ class FirewallIpRulesController extends _$FirewallIpRulesController {
 
   Future<void> removeRule(Map<String, dynamic> body) async {
     final repo = await ref.read(firewallRepositoryProvider.future);
-    await repo.batchOperate({
-      'type': 'address',
-      'rules': [body],
-    });
+    // 1Panel V2 的 batch 接口已变更，改为直接调用 ip 接口删除
+    await repo.operateIpRule(body);
     await refresh(silent: true);
   }
 
